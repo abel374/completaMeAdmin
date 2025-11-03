@@ -156,6 +156,32 @@ class UsersScreen extends StatelessWidget {
     );
   }
 
+  void _openImagePreview(BuildContext context, String url) {
+    showDialog<void>(
+      context: context,
+      builder: (c) => Dialog(
+        insetPadding: const EdgeInsets.all(12),
+        child: SizedBox(
+          width: double.infinity,
+          height: MediaQuery.of(context).size.height * 0.75,
+          child: InteractiveViewer(
+            panEnabled: true,
+            minScale: 0.5,
+            maxScale: 5,
+            child: CachedNetworkImage(
+              imageUrl: url,
+              fit: BoxFit.contain,
+              placeholder: (c, u) =>
+                  const Center(child: CircularProgressIndicator()),
+              errorWidget: (c, u, e) =>
+                  const Center(child: Icon(Icons.broken_image, size: 48)),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   String _formatCurrency(dynamic value) {
     try {
       if (value == null) return 'Kz 0';
@@ -203,15 +229,21 @@ class UsersScreen extends StatelessWidget {
           child: ListBody(
             children: [
               if ((data['userAvatarUrl'] ?? '').toString().isNotEmpty)
-                SizedBox(
-                  height: 120,
-                  child: CachedNetworkImage(
-                    imageUrl: data['userAvatarUrl'].toString(),
-                    fit: BoxFit.cover,
-                    placeholder: (c, u) =>
-                        const Center(child: CircularProgressIndicator()),
-                    errorWidget: (_, __, ___) =>
-                        const Icon(Icons.person, size: 80),
+                GestureDetector(
+                  onTap: () => _openImagePreview(
+                    context,
+                    data['userAvatarUrl'].toString(),
+                  ),
+                  child: SizedBox(
+                    height: 200,
+                    child: CachedNetworkImage(
+                      imageUrl: data['userAvatarUrl'].toString(),
+                      fit: BoxFit.cover,
+                      placeholder: (c, u) =>
+                          const Center(child: CircularProgressIndicator()),
+                      errorWidget: (_, __, ___) =>
+                          const Icon(Icons.person, size: 80),
+                    ),
                   ),
                 ),
               const SizedBox(height: 8),

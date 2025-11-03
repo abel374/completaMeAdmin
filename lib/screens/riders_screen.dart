@@ -161,15 +161,21 @@ class RidersScreen extends StatelessWidget {
           child: ListBody(
             children: [
               if ((data['riderAvatarUrl'] ?? '').toString().isNotEmpty)
-                SizedBox(
-                  height: 120,
-                  child: CachedNetworkImage(
-                    imageUrl: data['riderAvatarUrl'].toString(),
-                    fit: BoxFit.cover,
-                    placeholder: (c, u) =>
-                        const Center(child: CircularProgressIndicator()),
-                    errorWidget: (_, __, ___) =>
-                        const Icon(Icons.pedal_bike, size: 80),
+                GestureDetector(
+                  onTap: () => _openImagePreview(
+                    context,
+                    data['riderAvatarUrl'].toString(),
+                  ),
+                  child: SizedBox(
+                    height: 200,
+                    child: CachedNetworkImage(
+                      imageUrl: data['riderAvatarUrl'].toString(),
+                      fit: BoxFit.cover,
+                      placeholder: (c, u) =>
+                          const Center(child: CircularProgressIndicator()),
+                      errorWidget: (_, __, ___) =>
+                          const Icon(Icons.pedal_bike, size: 80),
+                    ),
                   ),
                 ),
               const SizedBox(height: 8),
@@ -187,6 +193,32 @@ class RidersScreen extends StatelessWidget {
             child: const Text('Fechar'),
           ),
         ],
+      ),
+    );
+  }
+
+  void _openImagePreview(BuildContext context, String url) {
+    showDialog<void>(
+      context: context,
+      builder: (c) => Dialog(
+        insetPadding: const EdgeInsets.all(12),
+        child: SizedBox(
+          width: double.infinity,
+          height: MediaQuery.of(context).size.height * 0.75,
+          child: InteractiveViewer(
+            panEnabled: true,
+            minScale: 0.5,
+            maxScale: 5,
+            child: CachedNetworkImage(
+              imageUrl: url,
+              fit: BoxFit.contain,
+              placeholder: (c, u) =>
+                  const Center(child: CircularProgressIndicator()),
+              errorWidget: (c, u, e) =>
+                  const Center(child: Icon(Icons.broken_image, size: 48)),
+            ),
+          ),
+        ),
       ),
     );
   }

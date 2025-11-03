@@ -21,6 +21,32 @@ class SellersScreen extends StatelessWidget {
     }
   }
 
+  void _openImagePreview(BuildContext context, String url) {
+    showDialog<void>(
+      context: context,
+      builder: (c) => Dialog(
+        insetPadding: const EdgeInsets.all(12),
+        child: SizedBox(
+          width: double.infinity,
+          height: MediaQuery.of(context).size.height * 0.75,
+          child: InteractiveViewer(
+            panEnabled: true,
+            minScale: 0.5,
+            maxScale: 5,
+            child: CachedNetworkImage(
+              imageUrl: url,
+              fit: BoxFit.contain,
+              placeholder: (c, u) =>
+                  const Center(child: CircularProgressIndicator()),
+              errorWidget: (c, u, e) =>
+                  const Center(child: Icon(Icons.broken_image, size: 48)),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Future<void> _toggleStatus(BuildContext context, DocumentSnapshot doc) async {
     final data = doc.data() as Map<String, dynamic>? ?? {};
     final current = (data['status'] ?? '').toString();
@@ -89,15 +115,21 @@ class SellersScreen extends StatelessWidget {
           child: ListBody(
             children: [
               if ((data['sellerAvatarUrl'] ?? '').toString().isNotEmpty)
-                SizedBox(
-                  height: 120,
-                  child: CachedNetworkImage(
-                    imageUrl: data['sellerAvatarUrl'].toString(),
-                    fit: BoxFit.cover,
-                    placeholder: (c, u) =>
-                        const Center(child: CircularProgressIndicator()),
-                    errorWidget: (c, u, e) =>
-                        const Icon(Icons.storefront, size: 80),
+                GestureDetector(
+                  onTap: () => _openImagePreview(
+                    context,
+                    data['sellerAvatarUrl'].toString(),
+                  ),
+                  child: SizedBox(
+                    height: 200,
+                    child: CachedNetworkImage(
+                      imageUrl: data['sellerAvatarUrl'].toString(),
+                      fit: BoxFit.cover,
+                      placeholder: (c, u) =>
+                          const Center(child: CircularProgressIndicator()),
+                      errorWidget: (c, u, e) =>
+                          const Icon(Icons.storefront, size: 80),
+                    ),
                   ),
                 ),
               const SizedBox(height: 8),
@@ -194,8 +226,8 @@ class SellersScreen extends StatelessWidget {
                       ),
                       title: Text(name.toString()),
                       subtitle: Text(
-                        '$email\n$phone',
-                        maxLines: 2,
+                        '$email\n$phone\n${_formatCurrency(earnings)} ${category.toString()}',
+                        maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                       ),
                       isThreeLine: true,
