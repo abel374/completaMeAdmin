@@ -3,6 +3,7 @@ import 'package:foodpanda_admin_web_portal/screens/dashboard_screen.dart';
 import 'package:foodpanda_admin_web_portal/screens/orders_screen.dart';
 import 'package:foodpanda_admin_web_portal/screens/users_screen.dart';
 import 'package:foodpanda_admin_web_portal/screens/sellers_screen.dart';
+import 'package:foodpanda_admin_web_portal/screens/sliders_screen.dart';
 
 import 'screens/riders_screen.dart';
 import 'screens/settings_screen.dart';
@@ -19,6 +20,7 @@ class _AdminHomeState extends State<AdminHome> {
 
   final List<Widget> _screens = const [
     DashboardScreen(),
+    SlidersScreen(),
     UsersScreen(),
     RidersScreen(),
     SellersScreen(),
@@ -30,6 +32,10 @@ class _AdminHomeState extends State<AdminHome> {
     NavigationRailDestination(
       icon: Icon(Icons.dashboard),
       label: Text('Dashboard'),
+    ),
+    NavigationRailDestination(
+      icon: Icon(Icons.photo_library),
+      label: Text('Sliders'),
     ),
     NavigationRailDestination(icon: Icon(Icons.person), label: Text('Users')),
     NavigationRailDestination(
@@ -76,8 +82,8 @@ class _AdminHomeState extends State<AdminHome> {
                     }),
                   ),
                   ListTile(
-                    leading: const Icon(Icons.person),
-                    title: const Text('Users'),
+                    leading: const Icon(Icons.photo_library),
+                    title: const Text('Sliders'),
                     selected: _selectedIndex == 1,
                     onTap: () => setState(() {
                       _selectedIndex = 1;
@@ -85,8 +91,8 @@ class _AdminHomeState extends State<AdminHome> {
                     }),
                   ),
                   ListTile(
-                    leading: const Icon(Icons.pedal_bike),
-                    title: const Text('Riders'),
+                    leading: const Icon(Icons.person),
+                    title: const Text('Users'),
                     selected: _selectedIndex == 2,
                     onTap: () => setState(() {
                       _selectedIndex = 2;
@@ -94,8 +100,8 @@ class _AdminHomeState extends State<AdminHome> {
                     }),
                   ),
                   ListTile(
-                    leading: const Icon(Icons.receipt_long),
-                    title: const Text('Orders'),
+                    leading: const Icon(Icons.pedal_bike),
+                    title: const Text('Riders'),
                     selected: _selectedIndex == 3,
                     onTap: () => setState(() {
                       _selectedIndex = 3;
@@ -103,11 +109,29 @@ class _AdminHomeState extends State<AdminHome> {
                     }),
                   ),
                   ListTile(
-                    leading: const Icon(Icons.settings),
-                    title: const Text('Settings'),
+                    leading: const Icon(Icons.storefront),
+                    title: const Text('Sellers'),
                     selected: _selectedIndex == 4,
                     onTap: () => setState(() {
                       _selectedIndex = 4;
+                      Navigator.of(context).pop();
+                    }),
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.receipt_long),
+                    title: const Text('Orders'),
+                    selected: _selectedIndex == 5,
+                    onTap: () => setState(() {
+                      _selectedIndex = 5;
+                      Navigator.of(context).pop();
+                    }),
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.settings),
+                    title: const Text('Settings'),
+                    selected: _selectedIndex == 6,
+                    onTap: () => setState(() {
+                      _selectedIndex = 6;
                       Navigator.of(context).pop();
                     }),
                   ),

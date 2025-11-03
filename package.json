@@ -1,0 +1,27 @@
+{
+  "name": "foodpanda_admin_web_portal",
+  "version": "1.0.0",
+  "description": "Este projeto é o esqueleto do portal de administração (web) para gerenciar os apps `foodpanda_user_app` e `foodpanda_riders_app`.",
+  "main": "set-admin.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abel374/completaMeAdmin.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abel374/completaMeAdmin/issues"
+  },
+  "homepage": "https://github.com/abel374/completaMeAdmin#readme",
+  "dependencies": {
+    "firebase-admin": "^13.5.0"
+  }
+}

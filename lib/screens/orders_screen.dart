@@ -187,17 +187,28 @@ class OrdersScreen extends StatelessWidget {
                             child: Text('Alterar status'),
                           ),
                         ],
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(_formatCurrency(total)),
-                            Text(
-                              _formatOrderTime(orderTimeRaw),
-                              style: const TextStyle(fontSize: 11),
-                            ),
-                            const Icon(Icons.more_vert),
-                          ],
+                        child: SizedBox(
+                          height: 48,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                _formatCurrency(total),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(fontSize: 13),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                _formatOrderTime(orderTimeRaw),
+                                style: const TextStyle(fontSize: 11),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     );
