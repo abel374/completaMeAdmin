@@ -1,0 +1,14 @@
+{
+  "builds": [
+    {
+      "src": "pubspec.yaml",
+      "use": "vercel-community/flutter"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/build/web/index.html"
+    }
+  ]
+}
